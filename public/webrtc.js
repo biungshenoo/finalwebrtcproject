@@ -4,18 +4,17 @@ var webSocket;
 var roomNumber; // of type string
 var msg;
 var pc;
-var getRoomButton;'use strict';
-var webSocket;
-var roomNumber; // of type string
-var msg;
-var pc;
+
 var getRoomButton;
 var joinRoomButton;
+
 var getmsg;
 var sendmsg;
+
 var getmsgButton;
 var sendmsgButton;
 var msgArea;
+
 var localStream;
 var isInitiator = false;
 var remoteCandidatesDrained = false;
@@ -89,7 +88,7 @@ function DisplayAndHiddenBtn(btnId, type) {
 
 function createWebSocket() {
   console.log("create websocket");
-  webSocket = new WebSocket("wss://178.128.181.191");
+  webSocket = new WebSocket("wss://www.antuo.me");
   webSocket.onopen = function(evt) { onWebSocketOpen(evt) };
   webSocket.onclose = function(evt) { onWebSocketClose(evt) };
   webSocket.onmessage = function(evt) { onWebSocketMessage(evt) };
@@ -124,6 +123,8 @@ function onWebSocketMessage(evt) {
   switch (response.msg_type) {
   case "get_room":
     roomNumber = response.room_number;
+    var result = window.location.origin;
+    writeToScreen('<span style="color: blue;">' +result +'/r/'+ roomNumber +'</span>');
     console.log("room is:" + roomNumber);
     DisplayAndHiddenBtn("getRoom", "h");
     navigator.mediaDevices.getUserMedia(constraints).then(function(s) {
