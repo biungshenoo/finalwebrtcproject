@@ -21,7 +21,7 @@ var remoteCandidatesDrained = false;
 var remoteCandidatesArray = [];
 var streamId = 0;
 var RemoteStream;
-var iceConfig = { 'iceServers': [{ 'url': 'stun:158.69.221.198:3478' }]};
+var iceConfig = { 'iceServers': [{ 'url': 'stun:sh-turn1.xirsys.com' }]};
 // Put variables in global scope to make them available to the browser console.
 const constraints = window.constraints = {
   audio: true,
@@ -148,6 +148,7 @@ function onWebSocketMessage(evt) {
          handleError(err);
       });
       DisplayAndHiddenBtn("showVideo", "h");
+  break;
   case "message":
     var msg = response.msg;
       writeToScreen('<span style="color: blue;">RESPONSE: ' + msg +'</span>');
@@ -229,7 +230,7 @@ function createPeerConnection(stream) {
   pc = new RTCPeerConnection(iceConfig);
   pc.addStream(localStream);
   pc.onicecandidate = function (evnt) {
-    console.log("onicecandidate: " + evnt.candidate);
+    console.log("onicecandidate: " + JSON.stringify(evnt.candidate));
     sendIceCandidate(evnt.candidate);
   };
   pc.onaddstream = function (evnt) {
